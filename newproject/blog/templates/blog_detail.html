@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% block title %}
+    Blog detail
+{% endblock %}
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p><strong>By:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_at|date:"F j, Y" }}</p>
+  <p>{{ post.content|linebreaks }}</p>
+
+  <hr>
+
+  <h2>Comments ({{ comments.count }})</h2>
+  {% for comment in comments %}
+    <div class="comment-box">
+      <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
+      <p>{{ comment.content|linebreaks }}</p>
+    </div>
+  {% empty %}
+    <p>No comments yet.</p>
+  {% endfor %}
+{% endblock %}
