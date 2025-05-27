@@ -1,0 +1,58 @@
+.blog-detail {
+    background-color: whitesmoke;
+    padding: 10px;
+}
+
+.blog-detail h1 {
+    color: rgb(252, 38, 73);
+}
+
+.blog-detail img {
+    width: 40%;
+    /* max-width: 800px; */
+    /* limit wide images */
+    height: 300px;
+    display: block;
+    /* centers the image */
+    object-fit: cover;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.blog-detail img:hover {
+    cursor: pointer;
+    transform: scale(1.001);
+    transition: 0.2s ease-in-out;
+}
+
+.comment-container {
+    width: 100%;
+}
+
+.comment-container form textarea {
+    width: 80%;
+    height: 20px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    background: transparent;
+    border: 1px solid #ccc;
+    resize: vertical;
+    border: none;
+    border-bottom: 2px solid rgb(68, 63, 64);
+}
+
+form textarea:focus {
+    outline: none;
+}
+
+form button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

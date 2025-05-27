@@ -1,5 +1,60 @@
-.post-card {
-    width: 200px;
-    height: 200px;
-    background-color: black;
+.posts-container {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    justify-content: start;
+    padding: 10px;
+}
+
+.posts-container .post-card {
+    width: 230px;
+    height: 280px;
+    /* Fixed height for consistent card size */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    color: black;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* Required for absolute positioning inside */
+    margin: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid blue;
+}
+
+.post-card h2 a {
+    text-decoration: none;
+    color: black;
+}
+
+.post-card img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+
+.post-card .btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+.post-card .btn button {
+    height: 35px;
+    width: 100px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.post-card .btn button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
 }

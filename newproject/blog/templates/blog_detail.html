@@ -1,21 +1,38 @@
 {% extends "index.html" %}
-{% block title %}
-    Blog detail
-{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
+<div class="blog-detail">
   <h1>{{ post.title }}</h1>
-  <p><strong>By:</strong> {{ post.author }} | <strong>Date:</strong> {{ post.created_at|date:"F j, Y" }}</p>
-  <p>{{ post.content|linebreaks }}</p>
-
+  <p><strong>{{ post.created_at|date:"F j, Y" }}</strong> | Author: {{ post.author }}</p>
+  <img src="{{ post.thumbnail.url }}" alt="thumbnail" />
+  <div class="content">
+    {{ post.content|linebreaks }}
+  </div>
   <hr>
-
-  <h2>Comments ({{ comments.count }})</h2>
+  <h3>Comments</h3>
   {% for comment in comments %}
-    <div class="comment-box">
+    <div class="comment">
       <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
-      <p>{{ comment.content|linebreaks }}</p>
+      <p>{{ comment.content }}</p>
     </div>
   {% empty %}
     <p>No comments yet.</p>
   {% endfor %}
+  {% if user.is_authenticated %}
+  <h3>Leave a Comment</h3>
+  <div class="comment-container">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+  {% else %}
+      <p><a href="{% url 'login' %}">Login</a> to leave a comment.</p>
+  </div>
+  {% if user == comment.user %}
+    <a href="{% url 'edit-comment' comment.pk %}">Edit</a> |
+    <a href="{% url 'delete-comment' comment.pk %}">Delete</a>
+  {% endif %}
+{% endif %}
 {% endblock %}
