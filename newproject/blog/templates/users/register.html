@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="heading">
+    <h2>Register</h2>
+</div>
+<div class="register_container">
+  <form method="post">
+    {% csrf_token %}
+    
+    {% if errors.username %}
+      <p class="error">{{ errors.username }}</p>
+    {% endif %}
+    <input type="text" name="username" placeholder="username" required value="{{ request.POST.username }}">
+    
+    {% if errors.email %}
+      <p class="error">{{ errors.email }}</p>
+    {% endif %}
+    <input type="email" name="email" placeholder="email" required value="{{ request.POST.email }}">
+    
+    {% if errors.password1 %}
+      <p class="error">{{ errors.password1 }}</p>
+    {% endif %}
+    <input type="password" name="password1" placeholder="password" required>
+    
+    {% if errors.password2 %}
+      <p class="error">{{ errors.password2 }}</p>
+    {% endif %}
+    <input type="password" name="password2" placeholder="confirm password" required>
+    
+    <div class="sub-btn">
+        <button type="submit">Sign Up</button>
+    </div>
+    
+  </form>
+</div>
+{% endblock %}

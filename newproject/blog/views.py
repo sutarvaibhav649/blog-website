@@ -1,9 +1,13 @@
 from django.shortcuts import render,get_object_or_404,redirect
+from django.contrib.auth.models import User
 from . import models
-from django.views.generic import ListView
 from .forms import CommentForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from .forms import CustomLoginForm
+from django.contrib import messages
 # Create your views here.
 def home_view(request):
     posts = models.BlogPost.objects.filter(is_published=True).order_by('-created_at')
@@ -68,3 +72,71 @@ def category_view(request, slug):
         'category': category,
         'posts': posts
     })
+
+
+def register_view(request):
+    errors = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if not username:
+            errors['username'] = "Username is required."
+        elif User.objects.filter(username=username).exists():
+            errors['username'] = "Username already taken."
+
+        if not email:
+            errors['email'] = "Email is required."
+        elif User.objects.filter(email=email).exists():
+            errors['email'] = "Email already registered."
+
+        if not password1:
+            errors['password1'] = "Password is required."
+        if not password2:
+            errors['password2'] = "Confirm password is required."
+        elif password1 != password2:
+            errors['password2'] = "Passwords do not match."
+
+        if not errors:
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            login(request, user)
+            return redirect('login_view')
+
+    return render(request, 'users/register.html', {'errors': errors})
+
+
+def login_view(request):
+    errors = {}
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+
+        # Basic validations
+        if not username:
+            errors['username'] = "Username is required."
+        if not password1:
+            errors['password1'] = "Password is required."
+
+        if not errors:
+            user = authenticate(request, username=username, password=password1)
+            if user is not None:
+                login(request, user)
+
+                # ✅ Set session variable correctly
+                request.session['username'] = user.username
+
+                return redirect('home_view')
+            else:
+                errors['password1'] = "Invalid username or password."
+
+    return render(request, 'users/login.html', {'errors': errors})
+
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, 'Logged out successfully.')
+    return redirect('home_view')

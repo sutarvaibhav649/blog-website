@@ -1,5 +1,7 @@
 from django import forms
 from .models import Comment
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class CommentForm(forms.ModelForm):
     content = forms.CharField(
@@ -16,3 +18,13 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
     
+class CustomRegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True, max_length=254)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+    
+class CustomLoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)

@@ -1,0 +1,36 @@
+.heading-login {
+    width: 300px;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+    margin-top: 150px;
+}
+
+.login_container {
+    width: 300px;
+    height: calc();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 10px;
+}
+
+.login_container form input {
+    border: 1px solid black;
+    height: 45px;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 2px solid blue;
+    padding: 5px;
+    color: black;
+}
+
+.login_container form input::placeholder {
+    color: rgb(111, 110, 110);
+}
+
+.login_container .lgn-btn {
+    width: 100%;
+    text-align: center;
+}

@@ -13,28 +13,43 @@
     <link rel="stylesheet" href="{% static "index.css" %}">
     <link rel="stylesheet" href="{% static "edit_comment.css" %}">
     <link rel="stylesheet" href="{% static "delete_comment.css" %}">
+    <link rel="stylesheet" href="{% static "register.css" %}">
+    <link rel="stylesheet" href="{% static "login.css" %}">
     
 </head>
 <body>  
     <nav>
-        <div class="left">
-            <ul>
-                <li><a href="{% url "home_view" %}">Logo</a></li>
-                <li><a href="{% url "home_view" %}">Home</a></li>
-                <li><input type="text" name="search" id="search" placeholder="search ...."></li>
-            </ul>
-        </div>
-        <div class="right">
-            <ul>
-                <li><a href="#">blogs</a></li>
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
-                <li><a href="#"><div class="profile">
+  <div class="left">
+    <ul>
+      <li><a href="{% url 'home_view' %}">Logo</a></li>
+      <li><a href="{% url 'home_view' %}">Home</a></li>
+      <li><input type="text" name="search" id="search" placeholder="search ...."></li>
+    </ul>
+  </div>
 
-                </div></a></li>
-            </ul>
-        </div>
-    </nav>
+  <div class="right">
+    <ul>
+      <li><a href="#">Blogs</a></li>
+
+      {% if request.user.is_authenticated %}
+        <li>{{ request.user.username }}</li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <li>
+          <a href="#">
+            <div class="profile">
+              <!-- You can add user profile picture here if available -->
+              <img src="{% static 'request.user.profile_image' %}" alt="profile" class="profile-pic">
+            </div>
+          </a>
+        </li>
+      {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'register' %}">Register</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
     {% block content %}{% endblock %}
 </body>
 </html>

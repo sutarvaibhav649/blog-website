@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+  <div class="heading-login">
+    <h2>Login</h2>
+  </div>
+  <div class="login_container">
+  <form method="post">
+      {% csrf_token %}
+      
+        {% if errors.password1%}
+        <p class="error">{{ errors.password1 }}</p>
+        {% endif %}
+        <input type="text" name="username" placeholder="username" required value="{{ request.POST.username }}">
+        <input type="password" name="password1" placeholder="password" required>
+        <div class="lgn-btn">
+            <button type="submit">Login</button>
+        </div>
+      </form>
+   </div>
+{% endblock %}
