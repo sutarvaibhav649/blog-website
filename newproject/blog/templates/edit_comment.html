@@ -4,9 +4,12 @@
 {% endblock %}
 {% block content %}
   <h2>Edit Comment</h2>
-  <form method="post">
+  <div class="edit_container">
+      <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Save Changes</button>
   </form>
+  </div>
+
 {% endblock %}

@@ -59,3 +59,12 @@ def delete_comment_view(request, pk):
         return redirect('blog-detail', slug=blog_slug)
 
     return render(request, 'delete_comment.html', {'comment': comment})
+
+
+def category_view(request, slug):
+    category = get_object_or_404(models.Category, slug=slug)
+    posts = models.BlogPost.objects.filter(category=category, is_published=True).order_by('-created_at')
+    return render(request, 'category_posts.html', {
+        'category': category,
+        'posts': posts
+    })

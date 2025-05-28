@@ -1,0 +1,31 @@
+/* body {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+} */
+
+.edit_container {
+    height: 300px;
+    width: 400px;
+    padding: 10px;
+    margin: auto;
+    background-color: rgb(210, 206, 206);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(185, 183, 183);
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+.edit_container form textarea {
+    width: 300px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    border-bottom: 2px solid blue;
+    margin: auto;
+}

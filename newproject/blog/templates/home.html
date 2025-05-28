@@ -11,7 +11,7 @@
           <h2><a href="{% url 'blog-detail' post.slug %}">{{ post.title }}</a></h2>
           <img src="{{post.thumbnail.url}}" alt="thumbnail" width = '50px' height='50px'>
           <p>{{ post.created_at|date:"F j, Y" }} by {{ post.author }}</p>
-          <p>{{ post.content|truncatewords:30 }}</p>
+          <p>{{ post.content|truncatewords:10 }}</p>
           <div class="btn">
             <a href="{% url "blog-detail" post.slug %}">
               <button type='submit'>Read more</button>
@@ -20,6 +20,19 @@
         </div>
       {% empty %}
     <p>No posts found.</p>
-    </div>
+      
   {% endfor %}
+  {% if post.category %}
+    {% if post.category %}
+      <p>
+        Category:
+        <a href="{% url 'category-posts' post.category.slug %}">
+          {{ post.category.name }}
+        </a>
+      </p>
+    {% else %}
+      <p>Uncategorized</p>
+  {% endif %}
+  <p>Uncategorized</p>
+{% endif %}
 {% endblock %}
