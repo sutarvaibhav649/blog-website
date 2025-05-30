@@ -18,6 +18,8 @@
             </a>    
           </div>
         </div>
+          <a href="{% url "create_post" %}">create post</a>
+          <a href="{% url "delete_post" post.slug %}">delete post</a>
       {% empty %}
     <p>No posts found.</p>
       
@@ -34,5 +36,6 @@
       <p>Uncategorized</p>
   {% endif %}
   <p>Uncategorized</p>
+
 {% endif %}
 {% endblock %}

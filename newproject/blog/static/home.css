@@ -58,3 +58,13 @@
     transition: 0.2s ease-in-out;
     cursor: pointer;
 }
+
+.profile {
+    height: 50px;
+    width: 50px;
+}
+
+.profile img {
+    height: 50px;
+    overflow: hidden;
+}

@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.models import User
 from . import models
@@ -6,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import CustomLoginForm
+from .forms import PostForm
 from django.contrib import messages
 # Create your views here.
 def home_view(request):
@@ -82,7 +83,9 @@ def register_view(request):
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
+        profile_image = request.FILES.get('profile')
 
+        # Username and email validations
         if not username:
             errors['username'] = "Username is required."
         elif User.objects.filter(username=username).exists():
@@ -93,17 +96,36 @@ def register_view(request):
         elif User.objects.filter(email=email).exists():
             errors['email'] = "Email already registered."
 
+        # Password validations
         if not password1:
             errors['password1'] = "Password is required."
+        else:
+            if len(password1) < 8:
+                errors['password1'] = "Password must be at least 8 characters."
+            elif not re.search(r'\d', password1):
+                errors['password1'] = "Password must contain at least one digit."
+            elif not re.search(r'[a-z]', password1):
+                errors['password1'] = "Password must contain a lowercase letter."
+            elif not re.search(r'[A-Z]', password1):
+                errors['password1'] = "Password must contain an uppercase letter."
+            elif not re.search(r'[~!@#$%^&*()_+=\[{\]};:<>|./?,-]', password1):
+                errors['password1'] = "Password must contain a special character."
+
         if not password2:
             errors['password2'] = "Confirm password is required."
         elif password1 != password2:
             errors['password2'] = "Passwords do not match."
 
+        # If everything is valid, register the user
         if not errors:
             user = User.objects.create_user(username=username, email=email, password=password1)
-            login(request, user)
-            return redirect('login_view')
+            # Handle profile image saving (see step 2)
+            if profile_image:
+                user.profile.profile_image = profile_image
+                user.profile.save()
+
+                login(request, user)
+            return redirect('home_view')
 
     return render(request, 'users/register.html', {'errors': errors})
 
@@ -126,7 +148,6 @@ def login_view(request):
             if user is not None:
                 login(request, user)
 
-                # ✅ Set session variable correctly
                 request.session['username'] = user.username
 
                 return redirect('home_view')
@@ -140,3 +161,24 @@ def logout_view(request):
     logout(request)
     messages.info(request, 'Logged out successfully.')
     return redirect('home_view')
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            models.BlogPost = form.save(commit=False)
+            models.BlogPost.author = request.user
+            models.BlogPost.save()
+            return redirect('home_view')
+    else:
+        form = PostForm()
+    return render(request, 'create_post.html', {'form': form})
+
+@login_required
+def delete_post(request, slug):
+    post = get_object_or_404(models.BlogPost, slug=slug)
+    if post.author == request.user:
+        post.delete()
+        return redirect('home_view')
+    return render(request, 'home_view')  

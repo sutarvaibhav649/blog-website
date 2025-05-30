@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment
+from .models import Comment,BlogPost
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -28,3 +28,8 @@ class CustomRegisterForm(UserCreationForm):
 class CustomLoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = ['title', 'content', 'thumbnail', 'category']

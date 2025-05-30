@@ -35,13 +35,16 @@
         <li>{{ request.user.username }}</li>
         <li><a href="{% url 'logout' %}">Logout</a></li>
         <li>
-          <a href="#">
-            <div class="profile">
-              <!-- You can add user profile picture here if available -->
-              <img src="{% static 'request.user.profile_image' %}" alt="profile" class="profile-pic">
-            </div>
-          </a>
-        </li>
+        <a href="#">
+          <div class="profile">
+            {% if request.user.profile.profile_image %}
+              <img src="{{ request.user.profile.profile_image.url }}" alt="profile" class="profile-pic">
+            {% else %}
+              <img src="{% static 'default_profile.png' %}" alt="default profile" class="profile-pic">
+            {% endif %}
+          </div>
+        </a>
+      </li>
       {% else %}
         <li><a href="{% url 'login' %}">Login</a></li>
         <li><a href="{% url 'register' %}">Register</a></li>
@@ -50,6 +53,39 @@
   </div>
 </nav>
 
-    {% block content %}{% endblock %}
+    {% block content %}
+      <h1>Latest Blog Posts</h1>
+    <div class="posts-container">
+      {% for post in posts %}
+        <div class="post-card" >
+          <h2><a href="{% url 'blog-detail' post.slug %}">{{ post.title }}</a></h2>
+          <img src="{{post.thumbnail.url}}" alt="thumbnail" width = '50px' height='50px'>
+          <p>{{ post.created_at|date:"F j, Y" }} by {{ post.author }}</p>
+          <p>{{ post.content|truncatewords:10 }}</p>
+          <div class="btn">
+            <a href="{% url "blog-detail" post.slug %}">
+              <button type='submit'>Read more</button>
+            </a>    
+          </div>
+        </div>
+      {% empty %}
+    <p>No posts found.</p>
+      
+  {% endfor %}
+    {% if post.category %}
+      {% if post.category %}
+        <p>
+          Category:
+          <a href="{% url 'category-posts' post.category.slug %}">
+           {{ post.category.name }}
+          </a>
+        </p>
+    {% else %}
+      <p>Uncategorized</p>
+    {% endif %}
+      <p>Uncategorized</p>
+    {% endif %}
+    
+  {% endblock %}
 </body>
 </html>
