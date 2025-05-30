@@ -1,10 +1,44 @@
 {% extends "index.html" %}
 {% load static %}
-{% block content %}
-  <h2>Create New Post</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Post</button>
-  </form>
+
+{% block title %}
+    Create Post
 {% endblock %}
+
+{% block content %}
+<h2 class="create-title">Create New Post</h2>
+
+<div class="post-card create-post-form">
+  <form id="multiStepForm" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Step 1: Title and Content -->
+    <div class="form-step" id="step1">
+      <p>{{ form.title.label_tag }} {{ form.title }}</p>
+      <p>{{ form.content.label_tag }} {{ form.content }}</p>
+      <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- Step 2: Thumbnail, Category, etc. -->
+    <div class="form-step" id="step2" style="display: none;">
+      <p>{{ form.thumbnail.label_tag }} {{ form.thumbnail }}</p>
+      <p>{{ form.category.label_tag }} {{ form.category }}</p>
+      <button type="button" class="prev-btn" onclick="prevStep()">Previous</button>
+      <button type="submit" class="submit-btn">Create Post</button>
+    </div>
+  </form>
+</div>
+<script>
+
+  function nextStep() {
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+  }
+
+  function prevStep() {
+    document.getElementById("step2").style.display = "none";
+    document.getElementById("step1").style.display = "block";
+  }
+</script>
+{% endblock %}
+

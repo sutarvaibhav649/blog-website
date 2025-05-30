@@ -7,7 +7,7 @@
 }
 
 .posts-container .post-card {
-    width: 230px;
+    width: 300px;
     height: 280px;
     /* Fixed height for consistent card size */
     background-color: white;
@@ -21,7 +21,13 @@
     margin: 10px 10px;
     display: flex;
     flex-direction: column;
-    border: 2px solid blue;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .post-card h2 a {
@@ -45,15 +51,16 @@
 .post-card .btn button {
     height: 35px;
     width: 100px;
-    background-color: #007BFF;
-    color: white;
+    background: transparent;
+    /* background-color: #007BFF; */
+    color: blue;
     border: none;
     border-radius: 8px;
     font-weight: bold;
 }
 
 .post-card .btn button:hover {
-    background-color: #0056b3;
+    /* background-color: #0056b3; */
     transform: scale(1.05);
     transition: 0.2s ease-in-out;
     cursor: pointer;
@@ -67,4 +74,54 @@
 .profile img {
     height: 50px;
     overflow: hidden;
+}
+
+.blog-create a {
+    color: red;
+}
+
+.post-card {
+    position: relative;
+}
+
+.blog-create {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.blog-create a {
+    color: red;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.blog-create a:hover {
+    color: darkred;
+    text-decoration: underline;
+}
+
+.create-section button {
+    height: 40px;
+    width: 100px;
+    background-color: blue;
+    border: none;
+    margin-left: 30px;
+    border-radius: 15px;
+}
+
+.create-section button:hover {
+    transition: 0.2s ease-in-out;
+    background-color: rgb(57, 57, 233);
+    cursor: pointer;
+}
+
+.create-section button a {
+    color: white;
+    font-weight: bold;
 }

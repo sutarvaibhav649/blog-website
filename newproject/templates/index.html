@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{% static "delete_comment.css" %}">
     <link rel="stylesheet" href="{% static "register.css" %}">
     <link rel="stylesheet" href="{% static "login.css" %}">
+    <link rel="stylesheet" href="{% static "create_post.css" %}">
     
 </head>
 <body>  
@@ -29,7 +30,7 @@
 
   <div class="right">
     <ul>
-      <li><a href="#">Blogs</a></li>
+      <li><a href="{% url 'home_view' %}">Blogs</a></li>
 
       {% if request.user.is_authenticated %}
         <li>{{ request.user.username }}</li>
@@ -52,7 +53,6 @@
     </ul>
   </div>
 </nav>
-
     {% block content %}
       <h1>Latest Blog Posts</h1>
     <div class="posts-container">
@@ -87,5 +87,39 @@
     {% endif %}
     
   {% endblock %}
+
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <h3>MyBlogSite</h3>
+      <p>Empowering bloggers to share their ideas and stories with the world.</p>
+    </div>
+
+    <div class="footer-middle">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{% url 'home_view' %}">Home</a></li>
+        <li><a href="{% url 'create_post' %}">Create Post</a></li>
+        <li><a href="{% url 'register' %}">Become a blogger</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-right">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><img src="{% static 'icons/facebook.svg' %}" alt="Facebook"></a>
+        <a href="#"><img src="{% static 'icons/twitter.svg' %}" alt="Twitter"></a>
+        <a href="#"><img src="{% static 'icons/github.svg' %}" alt="GitHub"></a>
+        <a href="#"><img src="{% static 'icons/instagram.svg' %}" alt="Instagram"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 MyBlogSite. All rights reserved.</p>
+  </div>
+</footer>
+
 </body>
 </html>

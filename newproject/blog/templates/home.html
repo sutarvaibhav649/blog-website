@@ -7,24 +7,37 @@
     <h1>Latest Blog Posts</h1>
     <div class="posts-container">
       {% for post in posts %}
-        <div class="post-card" >
+        <div class="post-card">
           <h2><a href="{% url 'blog-detail' post.slug %}">{{ post.title }}</a></h2>
-          <img src="{{post.thumbnail.url}}" alt="thumbnail" width = '50px' height='50px'>
+          <img src="{{ post.thumbnail.url }}" alt="thumbnail" width='50px' height='50px'>
           <p>{{ post.created_at|date:"F j, Y" }} by {{ post.author }}</p>
           <p>{{ post.content|truncatewords:10 }}</p>
           <div class="btn">
-            <a href="{% url "blog-detail" post.slug %}">
+            <a href="{% url 'blog-detail' post.slug %}">
               <button type='submit'>Read more</button>
             </a>    
           </div>
+          
+          {% if request.user.is_authenticated %}
+          <div class="blog-create">
+              {% if request.user == post.author %}
+                  <a href="{% url 'delete_post' post.slug %}">Delete</a>
+              {% endif %}
+          </div>
+          {% endif %}
         </div>
-          <a href="{% url "create_post" %}">create post</a>
-          <a href="{% url "delete_post" post.slug %}">delete post</a>
       {% empty %}
-    <p>No posts found.</p>
-      
-  {% endfor %}
-  {% if post.category %}
+        <p>No posts found.</p>
+      {% endfor %}
+    </div>
+
+    {% if request.user.is_authenticated %}
+      <div class="create-section">
+        <button type="submit"><a href="{% url 'create_post' %}">Create Post</a></button>
+        
+      </div>
+    {% endif %}
+
     {% if post.category %}
       <p>
         Category:
@@ -33,9 +46,6 @@
         </a>
       </p>
     {% else %}
-      <p>Uncategorized</p>
-  {% endif %}
-  <p>Uncategorized</p>
 
-{% endif %}
+    {% endif %}
 {% endblock %}

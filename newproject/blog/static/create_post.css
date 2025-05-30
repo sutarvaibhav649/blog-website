@@ -1,0 +1,72 @@
+/* Center the form container */
+.create-post-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+/* Style the form box */
+.create-post-form form {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Form input styles */
+textarea,
+input,
+select {
+    padding: 12px;
+    color: black;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: box-shadow 0.2s ease;
+    width: 100%;
+}
+
+/* Remove outline */
+textarea:focus,
+input:focus,
+select:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #007bff;
+}
+
+/* Buttons */
+.next-btn,
+.prev-btn,
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: background-color 0.3s;
+}
+
+.next-btn:hover,
+.prev-btn:hover,
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Title styling */
+.create-title {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}

@@ -31,8 +31,8 @@
 }
 
 .comment-container form textarea {
-    width: 80%;
-    height: 20px;
+    width: 50%;
+    height: 40px;
     padding: 10px;
     font-size: 14px;
     border-radius: 5px;
@@ -40,7 +40,7 @@
     border: 1px solid #ccc;
     resize: vertical;
     border: none;
-    border-bottom: 2px solid rgb(68, 63, 64);
+    border: 2px solid rgb(68, 63, 64);
 }
 
 form textarea:focus {

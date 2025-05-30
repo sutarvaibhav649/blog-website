@@ -182,3 +182,16 @@ def delete_post(request, slug):
         post.delete()
         return redirect('home_view')
     return render(request, 'home_view')  
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('home_view')
+    else:
+        form = PostForm()
+    return render(request, 'create_post.html', {'form': form})
